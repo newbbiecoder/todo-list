@@ -1,0 +1,327 @@
+@font-face {
+    font-family: Kalam;
+    src: url(./assets/font/comic-sans-ms-font-family/comici.ttf);
+}
+
+*{
+    margin: 0;
+}
+
+.user > img{
+    border-radius: 50%;
+}
+
+.user{
+    font-size: 2rem;
+    font-family: "Comic Relief", system-ui
+}
+
+.container{
+    display: flex;
+    gap:500px;
+    font-family: Kalam;
+    background-color: aliceblue;
+}
+
+.taskbar{
+    margin-top: 5rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.my-projects{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.projects{
+    display: flex;
+}
+
+.projects > svg{
+    margin-top:5px;
+    margin-left: 10px;
+    height: 50px;
+    width: 60px;
+    cursor: pointer;
+    fill: grey;
+}
+
+.projects > svg:hover{
+    fill: red;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 1rem;
+    font-size: 2.5rem;
+    background-color:rgb(250, 245, 239);
+    height: 1018px;
+    width: 300px;
+}
+
+.inbox, .today, .upcoming, .past-due, .completed{
+    display: flex;
+    gap: 20px;
+}
+
+.inbox > svg, .today > svg, .upcoming > svg, .past-due > svg, .completed > svg{
+    height: 30px;
+    width: 30px;
+} 
+
+.inbox:hover, .today:hover, .upcoming:hover, .past-due:hover, .completed:hover{
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+
+.user{
+    display: flex;
+    gap: 10px;
+}
+
+.home{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: "Comic Relief", system-ui;  
+    font-size: 1.7rem;
+    color: rgb(68, 67, 67);
+}
+
+.checkbox{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid black;
+    text-align: center;
+    cursor: pointer;
+}
+
+.basic-tasks > h1{
+    font-size: 3.3rem;
+    margin-bottom: 10px;
+}
+
+.basic-tasks > .tasks, .basic-tasks > .add-task, .routines > div > div:first-child, .inspiration > div > div:first-child, .add-task-routines, .add-task-inspiration{
+    display: flex;
+    gap: 10px;
+}
+
+.tasks > .content > p, .routines > div > div > p, .inspiration > div > div:first-child > p{
+    font-size: 1.2rem;
+}
+
+.routines > h3, .inspiration > h3{
+    font-size: 1.7rem;
+}
+
+.tasks,.new-tasks, .routines > div:nth-child(3), .routines > div:nth-child(5), .inspiration > div:nth-child(3), .inspiration > div:nth-child(5){
+    display: flex;
+    justify-content: space-between;
+}
+
+.content{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.action-buttons > svg{
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+}
+
+.action-buttons > svg:first-child:hover{
+    fill: coral;
+}
+
+.action-buttons > svg:last-child:hover{
+    fill: red;
+}
+
+.routines, .inspiration, .basic-tasks{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.taskbar{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.basic-tasks > .add-task > p, .inspiration > .add-task-inspiration > p, .routines > .add-task-routines > p {
+    color: grey;
+    font-size: 1.3rem;
+}
+
+.add-task > svg, .add-task-routines > svg, .add-task-inspiration > svg{
+    height: 30px;
+    width: 30px;
+    fill: red;
+}
+
+.add-task:hover, .add-task-routines:hover, .add-task-inspiration:hover{
+    cursor: pointer;
+    p{
+        color: red;
+    }
+    svg{
+        border-radius: 50%;
+        fill: white;
+        background-color: red;
+    }
+}
+
+.checkbox:hover::before{
+    content: "✓";
+}
+
+#modal{
+    position: absolute;
+    float: left;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Kalam;
+}
+
+.header{
+    font-size: 2rem;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1.5rem;
+}
+
+textarea{
+    resize: none;
+}
+
+select, ::picker(select){
+    appearance: base-select;
+}
+
+select{
+    border: 2px solid #ddd;
+    background-color: #eee;
+    padding: 5px;
+    transform: 0.4s;
+}
+
+select:hover,
+select:focus {
+  background: #ddd;
+}
+
+select::picker-icon {
+  color: #999;
+  transition: 0.4s rotate;
+}
+
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+::picker(select) {
+  border: none;
+}
+
+option{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+
+    border: 2px solid #ddd;
+    background: #eee;
+    padding: 10px;
+    transform: 0.4s;
+}
+
+option:nth-of-type(odd) {
+  background: #fff;
+}
+
+option:hover,
+option:focus {
+  background:darkseagreen;
+}
+
+option:checked {
+  font-weight: bold;
+}
+
+option::checkmark {
+  order: 1;
+  margin-left: auto;
+  content: "☑️";
+}
+
+::picker(select) {
+  opacity: 0;
+  transition: all 0.4s allow-discrete;
+}
+
+::picker(select):popover-open {
+  opacity: 1;
+}
+
+@starting-style {
+  ::picker(select):popover-open {
+    opacity: 0;
+  }
+}
+
+::picker(select) {
+  top: calc(anchor(top) - 221px);
+  left: anchor(-55%);
+  border-radius: 10px;
+}
+
+input[type="text"], textarea, input[type="datetime-local"]{
+    padding: 10px;
+    background-color: #eee;
+    border: none;
+    border-radius: 15px;
+}
+
+button[type="submit"]{
+    margin-top: 10px;
+    background-color: aquamarine;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: Futura Condensed;
+    font-family: Kalam;
+}
+
+button[type="submit"]:hover{
+    background-color: mediumaquamarine;
+}
+
+.new-tasks{
+    display: flex;
+    gap: 10px;
+}
+
