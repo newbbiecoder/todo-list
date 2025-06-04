@@ -72,9 +72,16 @@ function addTasktoDOM(taskSection, task) {
     newButtons.classList.add('action-buttons');
     newTask.appendChild(newButtons);
 
+    // Remove foolsvg class from new tasks for edit button
     const svg = document.querySelectorAll('.new-tasks > .action-buttons > svg:first-child');
     svg.forEach((select_svg) => {
         select_svg.classList.remove('foolsvg');
+    })
+
+    // Remove foolsvg2 class from new tasks for delete button
+    const svg2 = document.querySelectorAll('.new-tasks > .action-buttons > svg:nth-child(2)');
+    svg2.forEach((select_svg2) => {
+        select_svg2.classList.remove('foolsvg2');
     })
 
 }
@@ -162,8 +169,33 @@ class eventListeners {
                 modal.showModal();
                 title.value = domHeader.innerHTML;
                 description.value = domDescription.innerHTML;
+                
+                submit.onclick = function(event) {
+                    event.preventDefault();
+                    domHeader.innerHTML = title.value;
+                    domDescription.innerHTML = description.value;
+                    modal.close();
+                }
             }
         });
+    }
+
+    deleteTaskEventListeners(){
+        taskbar.addEventListener('click', (e) => {
+            const svg = e.target.closest('svg');
+            if(!svg) return;
+
+            if(svg.matches('.action-buttons > svg:nth-child(2)')) {
+                const edit = e.target;       
+                const todo = edit.closest('.new-tasks');
+                console.log(todo);
+                const hr = todo.previousSibling;
+                hr.remove();
+                if(!todo) return;
+
+                todo.remove();            
+            }
+        })
     }
 
     prankEventListeners(){
@@ -173,13 +205,16 @@ class eventListeners {
             if(!svg) return;
 
             const fool_todo = document.querySelector('.fool');
-            console.log(fool_todo)
             if(!fool_todo) return;
 
             if(fool_todo){
                 if(svg.matches('.action-buttons > .foolsvg')){       
                     if(!fool_todo) return;
                     alert("Can't edit this. Reason: Skill issue lol");
+                }
+                if(svg.matches('.action-buttons > .foolsvg2')){
+                    if(!fool_todo) return;
+                    alert("Can't delete this. Reason: Hight level skill issue");
                 }
             }          
             });
@@ -190,3 +225,4 @@ const addTaskListener = new eventListeners();
 addTaskListener.addTaskEventListeners();
 addTaskListener.editTaskEventListeners();  
 addTaskListener.prankEventListeners();
+addTaskListener.deleteTaskEventListeners();
