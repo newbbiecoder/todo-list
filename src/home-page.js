@@ -34,8 +34,96 @@ const description = document.getElementById('description');
 const date = document.getElementById('date');
 const priority = document.getElementById('priority');
 
+let storeTodo;
+
+function setDate(valueArr){
+
+    let domDate = valueArr[0];
+    let domTime = valueArr[1];
+
+    domDate = domDate.substring(5);
+    domDate = domDate.split("-").reverse().join('-');
+
+    let month = domDate.substring(3);
+
+    let newDate = domDate.split('-');
+
+    switch(month){
+        case "01":
+            month = "Jan";
+            break;
+        case "02":
+            month = "Feb";
+            break;
+        case "03":
+            month = "Mar";
+            break;
+        case "04":
+            month = "Apr";
+            break;
+        case "05":
+            month = "May";
+            break;
+        case "06":
+            month = "June";
+            break;
+        case "07":
+            month = "July";
+            break;
+        case "08":
+            month = "Aug";
+            break;
+        case "09":
+            month = "Sept";
+            break;
+        case "10":
+            month = "Oct";
+            break;
+        case "11":
+            month = "Nov";
+            break;
+        case "12":
+            month = "Dec";
+            break;
+    }
+
+    const finalDate = newDate[0] + " " + month;
+    return finalDate + " " + domTime;
+}
+
+function setPriority(input_value){
+    const priority1 = document.getElementById('priority1');
+    const priority2 = document.getElementById('priority2');
+    const priority3 = document.getElementById('priority3');
+    const priority4 = document.getElementById('priority4');
+
+    if(priority.value == "priority1"){    
+        input_value.style.backgroundColor = "#faeceb";
+        input_value.style.border = "3px solid #d24940";
+        priority1.selected = true;
+    }
+
+    if(priority.value == "priority2"){    
+        input_value.style.backgroundColor = "#fdf3e6";
+        input_value.style.border = "3px solid #ec9018";
+        priority2.selected = true;
+    }
+
+    if(priority.value == "priority3"){    
+        input_value.style.backgroundColor = "#e9f0fc";
+        input_value.style.border = "3px solid #387ce2";
+        priority3.selected = true;
+    }
+    
+    if(priority.value == "priority4"){
+        input_value.style.backgroundColor = "transparent";
+        input_value.style.border = "2px solid black";
+        priority4.selected = true;
+    }
+}
 function addTasktoDOM(taskSection, task) {
     const todo = new setTodo(title.value, description.value, date.value, priority.value);
+    storeTodo = todo;
     console.log(todo.setTasks());
 
     const newTask = document.createElement('div');
@@ -55,10 +143,21 @@ function addTasktoDOM(taskSection, task) {
     const newTaskDescription = document.createElement('p');
     newTaskDescription.classList.add('domDescription');
     newTaskDescription.innerHTML = description.value;
+    
+    let valueArr = date.value.split("T");
+
+    const newTaskDate = document.createElement('p');
+    newTaskDate.classList.add('domDate');
+    newTaskDate.innerHTML = setDate(valueArr);
+
+    if(newTaskDate.innerHTML == "  undefined") newTaskDate.innerHTML = "";
+
+    setPriority(checkbox);
 
     const newTaskWrapper = document.createElement('div');
     newTaskWrapper.appendChild(newTaskHeader);
     newTaskWrapper.appendChild(newTaskDescription);
+    newTaskWrapper.appendChild(newTaskDate);
 
     const content = document.createElement('div');
     content.classList.add('content');
@@ -84,7 +183,12 @@ function addTasktoDOM(taskSection, task) {
         select_svg2.classList.remove('foolsvg2');
     })
 
+    const deleteButton = document.querySelectorAll('.new-tasks > .action-buttons > svg:last-child');
+    deleteButton.forEach((selectDelete) => {
+        selectDelete.classList.add('delete');
+    })
 }
+
 
 const addTask = document.querySelector('.add-task');
 const addTaskRoutines = document.querySelector('.add-task-routines');
@@ -121,8 +225,7 @@ class eventListeners {
 
         addTask.onclick = function () {
             form.reset();
-            modal.showModal();
-            
+            modal.showModal();      
 
             submit.onclick = function (event) {
                 event.preventDefault();
@@ -134,7 +237,6 @@ class eventListeners {
             form.reset();
             modal.showModal();
             
-
             submit.onclick = function (event) {
                 event.preventDefault();
                 handleSubmit('routine');
@@ -145,7 +247,6 @@ class eventListeners {
             form.reset();
             modal.showModal();
             
-
             submit.onclick = function (event) {
                 event.preventDefault();
                 handleSubmit('inspiration');
@@ -165,15 +266,24 @@ class eventListeners {
 
                 const domHeader = todo.querySelector('.domHeader');
                 const domDescription = todo.querySelector('.domDescription');
+                const domDate = todo.querySelector('.domDate');
+
+                const domCheckbox = todo.querySelector('.checkbox');
+                console.log(domCheckbox);
 
                 modal.showModal();
                 title.value = domHeader.innerHTML;
                 description.value = domDescription.innerHTML;
+                date.value = storeTodo.date;
+                priority.value = storeTodo.priority;
                 
                 submit.onclick = function(event) {
                     event.preventDefault();
                     domHeader.innerHTML = title.value;
                     domDescription.innerHTML = description.value;
+                    domDate.innerHTML = setDate(date.value.split("T"));
+                    if(domDate.innerHTML == "  undefined") domDate.innerHTML = "";
+                    setPriority(domCheckbox);
                     modal.close();
                 }
             }
@@ -185,10 +295,10 @@ class eventListeners {
             const svg = e.target.closest('svg');
             if(!svg) return;
 
-            if(svg.matches('.action-buttons > svg:nth-child(2)')) {
+            if(svg.matches('.action-buttons > .delete')) {
                 const edit = e.target;       
                 const todo = edit.closest('.new-tasks');
-                console.log(todo);
+
                 const hr = todo.previousSibling;
                 hr.remove();
                 if(!todo) return;
@@ -198,8 +308,7 @@ class eventListeners {
         })
     }
 
-    prankEventListeners(){
-        
+    prankEventListeners(){       
         taskbar.addEventListener('click', (e) => {
             const svg = e.target.closest('svg');
             if(!svg) return;
@@ -219,6 +328,13 @@ class eventListeners {
             }          
             });
         }
+    
+    closeEventListener(){
+        const close = document.querySelector('.header > svg');
+        close.addEventListener('click', () => {
+            modal.close();
+        })
+    }
 }  
 
 const addTaskListener = new eventListeners();
@@ -226,3 +342,4 @@ addTaskListener.addTaskEventListeners();
 addTaskListener.editTaskEventListeners();  
 addTaskListener.prankEventListeners();
 addTaskListener.deleteTaskEventListeners();
+addTaskListener.closeEventListener();

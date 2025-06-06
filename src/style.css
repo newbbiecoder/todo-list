@@ -196,8 +196,21 @@
 }
 
 .header{
+    display: flex;
+    justify-content: space-between;
     font-size: 2rem;
     text-align: center;
+    margin-left: 3.5rem;
+}
+
+.header > svg{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.header > svg:hover{
+    fill: red;
 }
 
 form{
@@ -323,5 +336,11 @@ button[type="submit"]:hover{
 .new-tasks{
     display: flex;
     gap: 10px;
+}
+
+.domDate{
+    color: grey;
+    font-family: Roboto;
+    font-size: 1.03rem;
 }
 
