@@ -66,6 +66,8 @@
 .inbox, .today, .upcoming, .past-due, .completed{
     display: flex;
     gap: 20px;
+    padding: 5px;
+    padding-left: 0;
 }
 
 .inbox > svg, .today > svg, .upcoming > svg, .past-due > svg, .completed > svg{
@@ -83,13 +85,14 @@
     gap: 10px;
 }
 
-.home{
+.home, .homeProject{
     display: flex;
     flex-direction: column;
     gap: 20px;
     font-family: "Comic Relief", system-ui;  
     font-size: 1.7rem;
     color: rgb(68, 67, 67);
+    cursor: pointer;
 }
 
 .checkbox{
@@ -344,3 +347,14 @@ button[type="submit"]:hover{
     font-size: 1.03rem;
 }
 
+.todayHeading{
+    width: 900px;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.todayContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}

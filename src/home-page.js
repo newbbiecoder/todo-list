@@ -65,16 +65,16 @@ function setDate(valueArr){
             month = "May";
             break;
         case "06":
-            month = "June";
+            month = "Jun";
             break;
         case "07":
-            month = "July";
+            month = "Jul";
             break;
         case "08":
             month = "Aug";
             break;
         case "09":
-            month = "Sept";
+            month = "Sep";
             break;
         case "10":
             month = "Oct";
@@ -336,10 +336,46 @@ class eventListeners {
         })
     }
 }  
+let homeOpened = false;
+const allHomeTodo = document.querySelectorAll('.home-todo')
 
-const addTaskListener = new eventListeners();
-addTaskListener.addTaskEventListeners();
-addTaskListener.editTaskEventListeners();  
-addTaskListener.prankEventListeners();
-addTaskListener.deleteTaskEventListeners();
-addTaskListener.closeEventListener();
+function showHome(){
+    if(!homeOpened){
+        const addTaskListener = new eventListeners();
+        addTaskListener.addTaskEventListeners();
+        addTaskListener.editTaskEventListeners();  
+        addTaskListener.prankEventListeners();
+        addTaskListener.deleteTaskEventListeners();
+        addTaskListener.closeEventListener();
+        homeOpened = true
+    }
+    allHomeTodo.forEach((homeTodo) => {
+        homeTodo.style.display = "flex";
+    })
+}
+const homeTodo = document.querySelector('.home-todo');
+
+function closeHome(){
+    allHomeTodo.forEach((homeTodo) => {
+        homeTodo.style.display = "none";
+    })
+}
+
+
+const homeProject = document.querySelector('.homeProject');
+const today = document.querySelector('.today');
+
+export {showHome, closeHome, today};
+
+import navigateTo from "./assets/toggle";
+navigateTo('home');
+
+homeProject.addEventListener('click', () => {
+    navigateTo('home');
+})
+
+today.addEventListener('click', () => {
+    navigateTo('today');
+    today.style.backgroundColor = "antiquewhite";
+})
+
