@@ -26,6 +26,7 @@ class setTodo {
 
 const taskbar = document.querySelector('.taskbar');
 const modal = document.getElementById('modal');
+const addProjectModal = modal.cloneNode(true);
 const submit = document.querySelector('.submit');
 const form = document.querySelector('.form');
 
@@ -197,9 +198,12 @@ const addTaskInspiration = document.querySelector('.add-task-inspiration');
 
 class eventListeners {
     addTaskEventListeners() {
+        const addProjects = document.querySelector('.add-project');
+
         const basic_tasks = document.querySelector('.basic-tasks');
         const routines = document.querySelector('.routines');
         const inspiration = document.querySelector('.inspiration');
+        const newProjectContainer = document.querySelector('.newProjectContainer');
 
         function taskSubmit() {
             addTasktoDOM(basic_tasks, addTask);
@@ -212,12 +216,20 @@ class eventListeners {
         function inspirationSubmit() {
             addTasktoDOM(inspiration, addTaskInspiration);
         }
+
+        function newProjectSubmit(){
+            addTasktoDOM(newProjectContainer, addProjects);
+        }
         function handleSubmit(targetSection) {
-            if (title.value === "") return;
+            if (title.value.trim().length === 0){
+                alert("Enter Title to proceed");
+                return;
+            };
             
             if (targetSection === 'basic') taskSubmit();
             else if (targetSection === 'routine') routineSubmit();
             else if (targetSection === 'inspiration') inspirationSubmit();
+            else if (targetSection === 'addProject') newProjectSubmit();
             
             modal.close();
             form.reset();
@@ -252,6 +264,18 @@ class eventListeners {
                 handleSubmit('inspiration');
             };
         };
+
+        if(addProjects != null){
+            addProjects.onclick = function () {
+                form.reset();
+                modal.showModal();
+                
+                submit.onclick = function (event) {
+                    event.preventDefault();
+                    handleSubmit('addProject');
+                };
+            };
+        }      
     }
 
     editTaskEventListeners() {
@@ -335,25 +359,113 @@ class eventListeners {
             modal.close();
         })
     }
-}  
+}
+class addProject{
+    
+    projectIcon = document.querySelector('.projects > svg');
+
+    header = document.querySelector('.header');
+    projectHeader = this.header.cloneNode(true);
+    
+    addProjectEventListener(){
+        document.body.appendChild(addProjectModal)
+        document.querySelector('dialog:nth-child(3)').id = 'addProjectModal';
+
+        let formAddProject = document.querySelector('#addProjectModal > .form');       
+
+        this.projectIcon.addEventListener('click', () => {      
+            let createForm = document.createElement('form');
+            createForm.action = "dialog";
+            createForm.classList.add('addTaskForm');
+            addProjectModal.appendChild(createForm);    
+
+            if(formAddProject != null) formAddProject.remove();
+            
+            let addTaskHeader = document.querySelector('#addProjectModal > .header:nth-child(1)');
+            if(addTaskHeader != null) addTaskHeader.remove();
+            createForm.appendChild(this.projectHeader);
+
+            let headerContent = document.querySelector('#addProjectModal > form > .header > p');
+            headerContent.innerHTML = "Add Project";
+
+            let closeAddTask = document.querySelector('#addProjectModal > form > .header > svg');
+
+            const label = document.createElement('label');
+            createForm.appendChild(label);
+            label.textContent = "Project Name";
+
+            const labelInput = document.createElement('input');
+            labelInput.type = "text";
+            labelInput.name = "projectName";
+            labelInput.id = "projectName";
+            labelInput.placeholder = "New Project";
+            labelInput.required = true;
+            label.appendChild(labelInput);
+
+            let submitAddTask = document.createElement('button');
+            submitAddTask.type = "submit";
+            submitAddTask.textContent = "Submit";
+            submitAddTask.classList.add('submitAddTask');
+            addProjectModal.appendChild(submitAddTask);
+
+            submitAddTask.onclick = function(event){
+                if (labelInput.value.trim().length === 0){
+                    alert("Enter Project Name to proceed");
+                    return;
+                };
+                form.reset();
+                event.preventDefault();
+                addProjectModal.close();
+
+                const myProjects = document.querySelector('.my-projects');
+
+                let newProject = document.createElement('div');
+                newProject.classList.add('newProject');
+                newProject.innerHTML = `# &nbsp;&nbsp; ${labelInput.value}`;
+                myProjects.appendChild(newProject);
+
+                const addTaskListener = new eventListeners();
+
+                newProject.addEventListener('click', (e) => {
+                    let targetClick = e.target;
+                    console.log(targetClick);
+                    navigateTo('projects',newProject, addTaskListener, targetClick);
+                })
+            
+                addProjectModal.innerHTML = '';
+            }
+
+            addProjectModal.showModal();
+
+            closeAddTask.addEventListener('click', () => {          
+                addProjectModal.close();
+                addProjectModal.innerHTML = '';
+            })                    
+        }) 
+    }
+}
+
 let homeOpened = false;
 const allHomeTodo = document.querySelectorAll('.home-todo')
 
 function showHome(){
     if(!homeOpened){
+        const addProjectListener = new addProject();
+        addProjectListener.addProjectEventListener();
+
         const addTaskListener = new eventListeners();
         addTaskListener.addTaskEventListeners();
         addTaskListener.editTaskEventListeners();  
         addTaskListener.prankEventListeners();
         addTaskListener.deleteTaskEventListeners();
         addTaskListener.closeEventListener();
-        homeOpened = true
+
+        homeOpened = true;     
     }
     allHomeTodo.forEach((homeTodo) => {
         homeTodo.style.display = "flex";
     })
 }
-const homeTodo = document.querySelector('.home-todo');
 
 function closeHome(){
     allHomeTodo.forEach((homeTodo) => {
@@ -361,9 +473,10 @@ function closeHome(){
     })
 }
 
-
 const homeProject = document.querySelector('.homeProject');
 const today = document.querySelector('.today');
+
+
 
 export {showHome, closeHome, today};
 
@@ -378,4 +491,3 @@ today.addEventListener('click', () => {
     navigateTo('today');
     today.style.backgroundColor = "antiquewhite";
 })
-

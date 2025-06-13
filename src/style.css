@@ -85,7 +85,7 @@
     gap: 10px;
 }
 
-.home, .homeProject{
+.home, .homeProject, .newProject{
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -110,7 +110,7 @@
     margin-bottom: 10px;
 }
 
-.basic-tasks > .tasks, .basic-tasks > .add-task, .routines > div > div:first-child, .inspiration > div > div:first-child, .add-task-routines, .add-task-inspiration{
+.basic-tasks > .tasks, .basic-tasks > .add-task, .routines > div > div:first-child, .inspiration > div > div:first-child, .add-task-routines, .add-task-inspiration, .newProjectContainer > .add-project{
     display: flex;
     gap: 10px;
 }
@@ -148,7 +148,7 @@
     fill: red;
 }
 
-.routines, .inspiration, .basic-tasks{
+.routines, .inspiration, .basic-tasks, .newProjectContainer{
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -162,18 +162,18 @@
     flex-wrap: wrap;
 }
 
-.basic-tasks > .add-task > p, .inspiration > .add-task-inspiration > p, .routines > .add-task-routines > p {
+.basic-tasks > .add-task > p, .inspiration > .add-task-inspiration > p, .routines > .add-task-routines > p, .newProjectContainer > .add-project > p {
     color: grey;
     font-size: 1.3rem;
 }
 
-.add-task > svg, .add-task-routines > svg, .add-task-inspiration > svg{
+.add-task > svg, .add-task-routines > svg, .add-task-inspiration > svg, .add-project > svg{
     height: 30px;
     width: 30px;
     fill: red;
 }
 
-.add-task:hover, .add-task-routines:hover, .add-task-inspiration:hover{
+.add-task:hover, .add-task-routines:hover, .add-task-inspiration:hover, .add-project:hover{
     cursor: pointer;
     p{
         color: red;
@@ -189,7 +189,7 @@
     content: "✓";
 }
 
-#modal{
+#modal, #addProjectModal{
     position: absolute;
     float: left;
     left: 50%;
@@ -204,6 +204,15 @@
     font-size: 2rem;
     text-align: center;
     margin-left: 3.5rem;
+}
+
+#addProjectModal{
+    padding: 1.3rem;
+    width: 400px;
+}
+
+#addProjectModal > form > .header{
+    margin-left: 7rem;
 }
 
 .header > svg{
@@ -320,7 +329,7 @@ input[type="text"], textarea, input[type="datetime-local"]{
     border-radius: 15px;
 }
 
-button[type="submit"]{
+button[type="submit"], .submitAddTask{
     margin-top: 10px;
     background-color: aquamarine;
     padding: 10px;
@@ -328,8 +337,11 @@ button[type="submit"]{
     border-radius: 15px;
     cursor: pointer;
     font-size: 20px;
-    font-family: Futura Condensed;
     font-family: Kalam;
+}
+
+.submitAddTask{
+    width: -webkit-fill-available;
 }
 
 button[type="submit"]:hover{
@@ -351,6 +363,10 @@ button[type="submit"]:hover{
     width: 900px;
     font-weight: bold;
     font-size: 1.3rem;
+}
+
+.newProjectContainer{
+    width: 900px;
 }
 
 .todayContainer{
