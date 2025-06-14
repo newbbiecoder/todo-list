@@ -3,10 +3,7 @@ var uniqueId;
 
 function showProjects(newTask,addTaskListener,targetClick){
     let selectProjectContainer = document.getElementById(uniqueId);
-    if(selectProjectContainer != null){
-        selectProjectContainer.style.display = "flex";
-        return;
-    }
+    
 
     const newProjectContainer = document.createElement('div');
     newProjectContainer.classList.add('newProjectContainer');
