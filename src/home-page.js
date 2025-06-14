@@ -197,13 +197,13 @@ const addTaskInspiration = document.querySelector('.add-task-inspiration');
 
 
 class eventListeners {
-    addTaskEventListeners() {
-        const addProjects = document.querySelector('.add-project');
+    addTaskEventListeners(newProjectContainer, cloneAddTaskButton) {
+        // const addProjects = document.querySelector('.add-project');
 
         const basic_tasks = document.querySelector('.basic-tasks');
         const routines = document.querySelector('.routines');
         const inspiration = document.querySelector('.inspiration');
-        const newProjectContainer = document.querySelector('.newProjectContainer');
+        // const newProjectContainer = document.querySelector('.newProjectContainer');
 
         function taskSubmit() {
             addTasktoDOM(basic_tasks, addTask);
@@ -218,7 +218,7 @@ class eventListeners {
         }
 
         function newProjectSubmit(){
-            addTasktoDOM(newProjectContainer, addProjects);
+            addTasktoDOM(newProjectContainer, cloneAddTaskButton);
         }
         function handleSubmit(targetSection) {
             if (title.value.trim().length === 0){
@@ -265,8 +265,8 @@ class eventListeners {
             };
         };
 
-        if(addProjects != null){
-            addProjects.onclick = function () {
+        if(cloneAddTaskButton != null){
+            cloneAddTaskButton.onclick = function () {
                 form.reset();
                 modal.showModal();
                 
@@ -419,7 +419,7 @@ class addProject{
 
                 const myProjects = document.querySelector('.my-projects');
 
-                let newProject = document.createElement('div');
+                let newProject = document.createElement('button');
                 newProject.classList.add('newProject');
                 newProject.innerHTML = `# &nbsp;&nbsp; ${labelInput.value}`;
                 myProjects.appendChild(newProject);
@@ -430,6 +430,7 @@ class addProject{
                     let targetClick = e.target;
                     console.log(targetClick);
                     navigateTo('projects',newProject, addTaskListener, targetClick);
+                    
                 })
             
                 addProjectModal.innerHTML = '';
@@ -475,8 +476,6 @@ function closeHome(){
 
 const homeProject = document.querySelector('.homeProject');
 const today = document.querySelector('.today');
-
-
 
 export {showHome, closeHome, today};
 

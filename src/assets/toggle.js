@@ -1,6 +1,7 @@
 import { today, showHome, closeHome } from "../home-page";
 import { showToday, closeToday } from "./today";
 import { showProjects, closeProjects } from "./switch-projects";
+
 function hideAllViews(){
     closeHome();
     closeToday();
